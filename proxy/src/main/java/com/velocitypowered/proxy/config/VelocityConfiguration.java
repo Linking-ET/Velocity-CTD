@@ -606,6 +606,10 @@ public final class VelocityConfiguration implements ProxyConfig {
     return advanced.isAllowIllegalCharactersInChat();
   }
 
+  public boolean isEnableConfigurationPhase() {
+    return advanced.isEnableConfigurationPhase();
+  }
+
   public String getServerBrand() {
     return advanced.getServerBrand();
   }
@@ -1268,7 +1272,7 @@ public final class VelocityConfiguration implements ProxyConfig {
     @Expose
     private boolean enableReusePort = false;
     @Expose
-    private int commandRateLimit = 25;
+    private int commandRateLimit = 50;
     @Expose
     private boolean forwardCommandsIfRateLimited = true;
     @Expose
@@ -1279,6 +1283,8 @@ public final class VelocityConfiguration implements ProxyConfig {
     private int kickAfterRateLimitedTabCompletes = 0;
     @Expose
     private boolean allowIllegalCharactersInChat = false;
+    @Expose
+    private boolean enableConfigurationPhase = true;
     @Expose
     private String serverBrand = "{backend-brand} ({proxy-brand})";
     private String serverBrandAsString;
@@ -1316,12 +1322,13 @@ public final class VelocityConfiguration implements ProxyConfig {
         this.logCommandExecutions = config.getOrElse("log-command-executions", false);
         this.acceptTransfers = config.getOrElse("accepts-transfers", false);
         this.enableReusePort = config.getOrElse("enable-reuse-port", false);
-        this.commandRateLimit = config.getIntOrElse("command-rate-limit", 25);
+        this.commandRateLimit = config.getIntOrElse("command-rate-limit", 50);
         this.forwardCommandsIfRateLimited = config.getOrElse("forward-commands-if-rate-limited", true);
         this.kickAfterRateLimitedCommands = config.getIntOrElse("kick-after-rate-limited-commands", 0);
         this.tabCompleteRateLimit = config.getIntOrElse("tab-complete-rate-limit", 10); // very lenient
         this.kickAfterRateLimitedTabCompletes = config.getIntOrElse("kick-after-rate-limited-tab-completes", 0);
         this.allowIllegalCharactersInChat = config.getOrElse("allow-illegal-characters-in-chat", false);
+        this.enableConfigurationPhase = config.getOrElse("enable-configuration-phase", true);
         this.serverBrand = config.getOrElse("server-brand", "{backend-brand} ({proxy-brand})");
         this.fallbackVersionPing = config.getOrElse("fallback-version-ping", "{proxy-brand} {protocol-min}-{protocol-max}");
         this.alwaysFallBackPing = config.getOrElse("always-fallback-ping", false);
@@ -1420,6 +1427,10 @@ public final class VelocityConfiguration implements ProxyConfig {
       return allowIllegalCharactersInChat;
     }
 
+    public boolean isEnableConfigurationPhase() {
+      return enableConfigurationPhase;
+    }
+
     public String getServerBrand() {
       return this.serverBrandAsString;
     }
@@ -1458,6 +1469,7 @@ public final class VelocityConfiguration implements ProxyConfig {
           + ", acceptTransfers=" + acceptTransfers
           + ", enableReusePort=" + enableReusePort
           + ", allowIllegalCharactersInChat=" + allowIllegalCharactersInChat
+          + ", enableConfigurationPhase=" + enableConfigurationPhase
           + '}';
     }
   }

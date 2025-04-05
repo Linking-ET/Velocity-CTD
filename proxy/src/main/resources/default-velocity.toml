@@ -242,8 +242,8 @@ accepts-transfers = false
 enable-reuse-port = false
 
 # How fast (in milliseconds) are clients allowed to send commands after the last command
-# By default this is 25ms (40 commands per second).
-command-rate-limit = 25
+# By default this is 50ms (20 commands per second).
+command-rate-limit = 50
 
 # Should we forward commands to the backend upon being rate limited?
 # This will forward the command to the server instead of processing it on the proxy.
@@ -265,6 +265,11 @@ kick-after-rate-limited-tab-completes = 0
 # Enables the execution of illegal characters in chat and only allows
 # or denies illegal characters that are executed through the proxy.
 allow-illegal-characters-in-chat = false
+
+# Enables the utilization of the configuration phase when switching
+# servers and may resolve various ongoing bugs that networks face
+# and is marked as experimental, with reason!
+enable-configuration-phase = true
 
 # Modifies the server brand that displays in your debug menu.
 # Available options:
