@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - libdeflate
+  workflow_dispatch:
 
 jobs:
   build:
@@ -21,9 +22,14 @@ jobs:
       uses: actions/setup-java@v4
       with:
         java-version: 21
-        distribution: 'zulu'
+        distribution: 'temurin'
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        path: '*/build/libs/*.jar'
 
     - name: Upload Velocity
       uses: marvinpinto/action-automatic-releases@master
